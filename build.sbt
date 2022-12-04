@@ -7,5 +7,6 @@ lazy val root = (project in file("."))
     name := "intro_to_fp",
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-effect" % "3.4.1",
-    )
+    ),
+    scalacOptions ++= Seq("-Xfatal-warnings")
   )
