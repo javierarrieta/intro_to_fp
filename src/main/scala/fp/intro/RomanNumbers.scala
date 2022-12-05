@@ -3,11 +3,10 @@ package fp.intro
 object RomanNumbers extends App {
   // Error handling and basic composition
 
-  import cats.data.{NonEmptyList, Validated}
 
   import cats.instances.list.*
-  import cats.syntax.traverse.*
-  import cats.syntax.either.*
+  import cats.syntax.all.*
+  import cats.data.{Validated, NonEmptyList}
 
   val romaChar2IntPF: PartialFunction[Char, Int] = _.toLower match {
     case 'i' => 1
@@ -19,14 +18,25 @@ object RomanNumbers extends App {
     case 'm' => 1000
   }
 
-  val romanChar2Int: Char => Validated[NonEmptyList[String], Int] = romaChar2IntPF.andThen(Validated.Valid.apply)
-    .orElse(c => Validated.Invalid(NonEmptyList.one(s"'$c' is not a valid Roman digit'")))
+  val romanChar2Int: Char => Either[String, Int] =
+    romaChar2IntPF.andThen(Right.apply).orElse(c => Left(s"'$c' is not a valid Roman digit'"))
 
+  val roman2IntValidated: NonEmptyList[Char] => Validated[NonEmptyList[String], NonEmptyList[Int]] =
+    _.traverse(romanChar2Int.andThen(_.toValidatedNel))
 
-  val roman2Int: String => Validated[NonEmptyList[String], List[Int]] =
-    _.toList.traverse(romanChar2Int)
+  val computeSubtracts: List[Int] => Validated[NonEmptyList[String], Int] = {
+    case first :: second :: Nil => Validated.Valid(if (first >= second) first else -first)
+    case l => Validated.Invalid(NonEmptyList.one(s"Wrong function, needed 2 Ints and got $l"))
+  }
 
-  roman2Int("VII")
-  roman2Int("MKCLJBI")
+  val roman2Int: String => Either[NonEmptyList[String], Int] = { s =>
+    for {
+      l <- NonEmptyList.fromList(s.toList).toRight(NonEmptyList.one("Cannot use an empty list as input"))
+      ints <- roman2IntValidated(l).toEither
+      r <- ints.toList.sliding(2).toList.traverse(computeSubtracts).map(b => (b :+ ints.last).sum).toEither
+    } yield r
+  }
+
+  List("", "XJIOPE", "LCVI", "MMXXII", "MXDII").map(roman2Int)
 
 }
