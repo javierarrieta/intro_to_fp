@@ -63,3 +63,19 @@ maybeSqrt(-100)
 maybeSqrt(-100).toRight("ImaginaryNumbersNotSupported")
 
 maybeSqrt(100).toRight("ImaginaryNumbersNotSupported")
+
+/*
+How to represent effectful/impure computations in a referential transparent manner?
+
+We use an effect type constructor, in this example would be IO[A] that represents a deferred
+computation that would yield a result of type A when executed
+*/
+
+import cats.effect.std.Console
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
+
+val myConsole = Console.make[IO]
+val deferredA = myConsole.readLine
+
+val echo = deferredA.flatMap(myConsole.println)
