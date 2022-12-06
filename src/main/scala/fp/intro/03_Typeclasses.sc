@@ -1,5 +1,6 @@
-// Typeclasses
+// Type classes
 
+// Many type classes require higher kinded types
 trait MyFunctor[F[_]] {
   def fmap[A, B](fa: F[A])(f: A => B): F[B]
 }
