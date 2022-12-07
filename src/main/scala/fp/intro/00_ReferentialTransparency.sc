@@ -34,7 +34,7 @@ val sqr100 = square(100) //This value should be used somewhere (otherwise the co
 
 def div(n: Double, d: Double): Double = n / d
 
-def increment(i: Int): Int = i+1 //Not transparent
+def addOne(i: Int): Int = i+1 //Not transparent
 
 div(4.5, 3)
 div(2, 0)
@@ -75,7 +75,11 @@ import cats.effect.std.Console
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 
+val myDeferredComputation: IO[Int] = IO.delay(42)
+
 val myConsole = Console.make[IO]
 val deferredA = myConsole.readLine
 
 val echo = deferredA.flatMap(myConsole.println)
+
+//Go to ./EchoProgram.scala for a demo
