@@ -1,13 +1,13 @@
 // Functions and currying
 
-def increment(a: Int): Int = a + 1
+def addOne(a: Int): Int = a + 1
 
-val inc: Int => Int = _ + 1 // a => a + 1
+val add1: Int => Int = _ + 1 // a => a + 1
 
-val inc2: Int => Int = 1.+
+val add1b: Int => Int = 1.+
 
-inc(1)
-inc2(2)
+add1(1)
+add1b(2)
 
 def multiply(a: Double, b: Double) = a * b
 
@@ -31,5 +31,6 @@ val mult2: Double => Double = mult(2)
 mult2(5)
 mult2(8)
 
+List(1d, 2d, 3d).map(mult2)
 List(1d, 2d, 3d).map(mult(5))
 List(1d, 2d, 3d).map(i => multiply(5, i))

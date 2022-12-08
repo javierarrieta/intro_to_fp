@@ -57,4 +57,4 @@ object Effects extends IOApp:
       _ <- bo.map(console.println).sequence
     } yield bo
 
-    Monad[IO].iterateWhile(ioBo)(_.nonEmpty) *> IO.pure(ExitCode.Success)
+    Monad[IO].iterateWhile(ioBo)(_.nonEmpty).flatMap(_ => IO.pure(ExitCode.Success))

@@ -4,10 +4,11 @@
 Make illegal states irrepresentable using the type system
 */
 
-enum Shape:
+enum Shape {
   case Circle(radius: Double)
   case Rectangle(width: Double, height: Double)
 //  case Triangle(base: Double, height: Double)
+}
 
 val area: Shape => Double =
   case Shape.Circle(radius)  => radius * radius * Math.PI
@@ -17,26 +18,29 @@ area(Shape.Circle(5.0))
 
 area(Shape.Rectangle(3.0, 6.0))
 
-enum Color(val rgb: Int):
+enum Color(val rgb: Int) {
   case Red extends Color(0xff0000)
   case Green extends Color(0x00ff00)
   case Blue extends Color(0x0000ff)
   case Mix(mix: Int) extends Color(mix)
+}
 
-object People:
+object People {
   opaque type FirstName = String
   opaque type LastName = String
 
   private val validateName: String => Option[String] = n =>
     if (n.isEmpty || n.charAt(0).isLower) None else Some(n)
 
-  object FirstName:
+  object FirstName {
     val fromString: String => Option[FirstName] = validateName
-
-  object LastName:
+  }
+  object LastName {
     val fromString: String => Option[LastName] = validateName
+  }
 
   case class Person(f: FirstName, l: LastName)
+}
 
 import People.*
 
@@ -44,6 +48,11 @@ import People.*
 
 for {
   f <- FirstName.fromString("John")
+  l <- LastName.fromString("Doe")
+} yield Person(f, l)
+
+for {
+  f <- FirstName.fromString("")
   l <- LastName.fromString("Doe")
 } yield Person(f, l)
 

@@ -78,7 +78,7 @@ import cats.effect.unsafe.implicits.global
 val myDeferredComputation: IO[Int] = IO.delay(42)
 
 val myConsole = Console.make[IO]
-val deferredA = myConsole.readLine
+val deferredA: IO[String] = myConsole.readLine
 
 val echo = deferredA.flatMap(myConsole.println)
 

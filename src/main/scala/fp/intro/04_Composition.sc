@@ -17,8 +17,11 @@ val romaChar2IntPF: PartialFunction[Char, Int] = _.toLower match {
 val romanChar2Int: Char => Either[String, Int] =
   romaChar2IntPF.andThen(Right.apply).orElse(c => Left(s"'$c' is not a valid Roman digit'"))
 
+//Javi: Use different types for the accummulating
 val roman2IntValidated: NonEmptyList[Char] => Validated[NonEmptyList[String], NonEmptyList[Int]] =
   _.traverse(romanChar2Int.andThen(_.toValidatedNel))
+
+// Either[String, Int] => Validated[NonEmptyList[String], Int]
 
 val computeSubtracts: List[Int] => Validated[NonEmptyList[String], Int] = {
   case first :: second :: Nil => Validated.Valid(if (first >= second) first else -first)
