@@ -1,4 +1,4 @@
-// Referential transparency
+// Referential transparency: https://scastie.scala-lang.org/javierarrieta/omUExOW2TPi7iL4I9VPVbg/1
 // https://en.wikipedia.org/wiki/Referential_transparency
 
 // An expression is called referentially transparent if it can be replaced

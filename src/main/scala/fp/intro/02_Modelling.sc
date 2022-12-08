@@ -1,4 +1,4 @@
-// Modelling
+// Modelling: https://scastie.scala-lang.org/javierarrieta/qi5WFf09Seyka0ySzzKHSw/1
 
 /*
 Make illegal states irrepresentable using the type system

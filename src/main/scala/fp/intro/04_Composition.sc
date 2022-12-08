@@ -1,4 +1,4 @@
-// Error handling and basic composition
+// Error handling and basic composition: https://scastie.scala-lang.org/javierarrieta/YnhlFjGvQNWy2GVTkhKVrw/1
 
 import cats.instances.list.*
 import cats.syntax.all.*

@@ -1,4 +1,4 @@
-// Type classes
+// Type classes: https://scastie.scala-lang.org/javierarrieta/LP1ikvgpQFusrFdi5lNDUw/1
 
 // Many type classes require higher kinded types
 trait MyFunctor[F[_]] {
