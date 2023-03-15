@@ -34,7 +34,7 @@ val sqr100 = square(100) //This value should be used somewhere (otherwise the co
 
 def div(n: Double, d: Double): Double = n / d
 
-def addOne(i: Int): Int = i+1 //Not transparent
+def addOne(i: Int): Int = i+1 //Not complete
 
 div(4.5, 3)
 div(2, 0)

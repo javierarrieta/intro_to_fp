@@ -4,20 +4,26 @@
 Make illegal states irrepresentable using the type system
 */
 
+//Sum type
 enum Shape {
   case Circle(radius: Double)
+  //Product type
   case Rectangle(width: Double, height: Double)
 //  case Triangle(base: Double, height: Double)
 }
 
-val area: Shape => Double =
-  case Shape.Circle(radius)  => radius * radius * Math.PI
+val area: Shape => Double = {
+  case Shape.Circle(radius) => radius * radius * Math.PI
   case Shape.Rectangle(w, h) => w * h
+}
 
 area(Shape.Circle(5.0))
 
 area(Shape.Rectangle(3.0, 6.0))
 
+//area(Shape.Triangle(2.0,1.0))
+
+//ADT
 enum Color(val rgb: Int) {
   case Red extends Color(0xff0000)
   case Green extends Color(0x00ff00)

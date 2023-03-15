@@ -4,7 +4,7 @@ import cats.instances.list.*
 import cats.syntax.all.*
 import cats.data.{Validated, NonEmptyList}
 
-val romaChar2IntPF: PartialFunction[Char, Int] = _.toLower match {
+val romanChar2IntPF: PartialFunction[Char, Int] = _.toLower match {
   case 'i' => 1
   case 'v' => 5
   case 'x' => 10
@@ -15,11 +15,17 @@ val romaChar2IntPF: PartialFunction[Char, Int] = _.toLower match {
 }
 
 val romanChar2Int: Char => Either[String, Int] =
-  romaChar2IntPF.andThen(Right.apply).orElse(c => Left(s"'$c' is not a valid Roman digit'"))
+  romanChar2IntPF.andThen(Right.apply).orElse(c => Left(s"'$c' is not a valid Roman digit'"))
+//i => Right(romanChar2IntPf(i))
+romanChar2Int('V')
+romanChar2Int('P')
+//
+//val romanChar2IntValidated: (Char => Either[String, Int]) => (Char => Validated[NonEmptyList[String], Int]) =
+//  romanChar2Int.andThen(_.toValidatedNel)
 
 //Javi: Use different types for the accummulating
 val roman2IntValidated: NonEmptyList[Char] => Validated[NonEmptyList[String], NonEmptyList[Int]] =
-  _.traverse(romanChar2Int.andThen(_.toValidatedNel))
+  _.traverse(romanChar2Int.andThen(_.toValidatedNel)) //Char => Validated[Nel[String], Int]
 
 // Either[String, Int] => Validated[NonEmptyList[String], Int]
 
@@ -36,4 +42,8 @@ val roman2Int: String => Either[NonEmptyList[String], Int] = { s =>
   } yield r
 }
 
-List("", "XJIOPE", "LCVI", "MMXXII", "MXDII").map(roman2Int)
+roman2Int("")
+roman2Int("XJIOPE")
+roman2Int("LCVI")
+roman2Int("MMXXII")
+roman2Int("MXDII")

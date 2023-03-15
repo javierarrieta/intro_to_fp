@@ -28,3 +28,8 @@ object optionMonad extends MyMonad[Option] {
 
 optionFunctor.fmap(Some(5))(2.*)
 optionMonad.bind(Some(5))(a => Some(5*a))
+
+optionMonad.bind[Int, Int](Some(4))(a => Some(5*a))
+
+List(1,2,3).map(1.+)
+List(1,2).flatMap(i => List(i, i+1))
